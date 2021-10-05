@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">S37-Uber</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="enable_gps">Enable GPS</string>
+    <string name="required_for_this_app">Required for this app</string>
+    <string name="enable_now">Enable Now</string>
+    <string name="location_permission_not_granted">Location Permission not granted</string>
+    <string name="current_location">Current Location</string>
+    <string name="where_to">Destination</string>
+    <string name="pickup_location">Nurse Start Location</string>
+    <string name="request_cab">Request A Visit</string>
+    <string name="your_cab_is_arriving">Your Cab is Arriving</string>
+    <string name="requesting_your_cab">Requesting Nurse</string>
+    <string name="your_cab_is_booked">Your Cab is Booked</string>
+    <string name="your_cab_has_arrived">Your Cab has Arrived</string>
+    <string name="you_are_on_a_trip">Nurse is en-route to the destination</string>
+    <string name="trip_end">Nurse has reached</string>
+    <string name="take_next_ride">Take Next Ride</string>
+    <string name="route_not_available_choose_different_locations">Route Not Available: Choose different pickup and drop location</string>
+    <string name="info_agenda_text">Baseline visit ABD 1234567890\n\n03:00-3:45pm: Coordinator to collect medical history &amp; medications history\n\nInvestigator to confirm medical history with participant\n\nCoordinator to collect remainder of platform assessments and Urine Pregnancy Test</string>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mp.poc.s37uberandroid">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name=".S37UberApp"
+        android:allowBackup="true"
+        android:fullBackupOnly="true"
+        android:icon="@mipmap/ic_launcher_s37"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_s37"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".ui.SplashActivity"
+            android:exported="false"
+            android:theme="@style/FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.LoginActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ui.HomeActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ui.ScreeningInfoActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ui.maps.MapsActivity"
+            android:theme="@style/MapsTheme" />
+    </application>
+
+</manifest>
