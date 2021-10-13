@@ -12,6 +12,7 @@ import com.google.maps.model.TravelMode
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
+import kotlin.properties.Delegates
 
 object Simulator {
 
@@ -23,6 +24,10 @@ object Simulator {
     private lateinit var dropLocation: LatLng
     private var tripPath = arrayListOf<LatLng>()
     private val mainThread = Handler(Looper.getMainLooper())
+    private var tripPeriod by Delegates.notNull<Long>()
+    private lateinit var socketListener: WebSocketListener
+    private var tripPathIndex = 0
+    private var pathSize = 0
 
     fun requestCab(
         pickUpLocation: LatLng,
@@ -36,8 +41,8 @@ object Simulator {
     }
 
     private fun startTimerForWaitDuringPickUp(webSocketListener: WebSocketListener) {
-        val delay = 500L
-        val period = 500L
+        val delay = 300L
+        val period = 300L
         timer = Timer()
         timerTask = object : TimerTask() {
             override fun run() {
@@ -91,19 +96,26 @@ object Simulator {
     }
 
     private fun startTimerForTrip(webSocketListener: WebSocketListener) {
-        val delay = 3000L
-        val period = 1200L
-        val size = tripPath.size
-        var index = 0
+        val delay = 1000L
+        val period = 500L
+        tripPeriod = period
+        pathSize = tripPath.size
+        tripPathIndex = 0
+        socketListener = webSocketListener
         timer = Timer()
-        timerTask = object : TimerTask() {
-            override fun run() {
+        timerTask = getTripTimerTask()
+        timer?.schedule(timerTask, delay, period)
+    }
 
-                if (index == 0) {
+    private fun getTripTimerTask(): TimerTask {
+        return object : TimerTask() {
+            override fun run() {
+                Log.e("TestSim", tripPathIndex.toString())
+                if (tripPathIndex == 0) {
                     val jsonObjectTripStart = JSONObject()
                     jsonObjectTripStart.put("type", "tripStart")
                     mainThread.post {
-                        webSocketListener.onMessage(jsonObjectTripStart.toString())
+                        socketListener.onMessage(jsonObjectTripStart.toString())
                     }
 
                     val jsonObject = JSONObject()
@@ -117,27 +129,39 @@ object Simulator {
                     }
                     jsonObject.put("path", jsonArray)
                     mainThread.post {
-                        webSocketListener.onMessage(jsonObject.toString())
+                        socketListener.onMessage(jsonObject.toString())
                     }
                 }
 
-                val jsonObject = JSONObject()
-                jsonObject.put("type", "location")
-                jsonObject.put("lat", tripPath[index].lat)
-                jsonObject.put("lng", tripPath[index].lng)
-                mainThread.post {
-                    webSocketListener.onMessage(jsonObject.toString())
-                }
+//                if (tripPathIndex <= pathSize - 1) {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("type", "location")
+                    jsonObject.put("lat", tripPath[tripPathIndex].lat)
+                    jsonObject.put("lng", tripPath[tripPathIndex].lng)
+                    mainThread.post {
+                        socketListener.onMessage(jsonObject.toString())
+                    }
+//                }
 
-                if (index == size - 1) {
+                if (tripPathIndex == pathSize - 1) {
                     stopTimer()
-                    startTimerForTripEndEvent(webSocketListener)
+                    startTimerForTripEndEvent(socketListener)
                 }
 
-                index++
+                tripPathIndex++
             }
         }
-        timer?.schedule(timerTask, delay, period)
+    }
+
+    fun rescheduleExistingTripTime(period: Long) {
+        if (tripPeriod == period || timer == null) return
+        tripPeriod = period
+        synchronized(timer!!) {
+            timer?.cancel()
+            timer = Timer()
+            timerTask = getTripTimerTask()
+            timer?.schedule(timerTask, 0, period)
+        }
     }
 
     private fun startTimerForTripEndEvent(webSocketListener: WebSocketListener) {
@@ -159,6 +183,9 @@ object Simulator {
 
     fun stopTimer() {
         if (timer != null) {
+            tripPeriod = 0L
+            tripPathIndex = 0
+            pathSize = 0
             timer?.cancel()
             timer = null
         }

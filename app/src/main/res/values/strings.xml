@@ -13,7 +13,8 @@
     <string name="requesting_your_cab">Requesting Nurse</string>
     <string name="your_cab_is_booked">Your Cab is Booked</string>
     <string name="your_cab_has_arrived">Your Cab has Arrived</string>
-    <string name="you_are_on_a_trip">Nurse is en-route to the destination</string>
+    <string name="you_are_on_a_trip">Jessica Marlin (Microbiology) has started the journey at 1:00 PM</string>
+    <string name="arriving_shortly">Jessica Marlin (Microbiology) is 5 mins away from your location</string>
     <string name="trip_end">Nurse has reached</string>
     <string name="take_next_ride">Take Next Ride</string>
     <string name="route_not_available_choose_different_locations">Route Not Available: Choose different pickup and drop location</string>

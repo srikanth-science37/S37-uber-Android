@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'kotlin-android-extensions'
 }
 
@@ -12,12 +13,16 @@ android {
 
     defaultConfig {
         applicationId "com.mp.poc.s37uberandroid"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "int", "TRIP_NOTIFICATION_ID", TRIP_NOTIFICATION_ID
+        buildConfigField "String", "TRIP_CHANNEL_ID", TRIP_CHANNEL_ID
+        buildConfigField "String", "TRIP_CHANNEL_NAME", TRIP_CHANNEL_NAME
     }
 
     buildTypes {
@@ -42,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
@@ -55,4 +61,5 @@ dependencies {
     implementation 'com.google.maps:google-maps-services:0.2.9'
     implementation project(':s37mapsimulator')
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 }

@@ -15,7 +15,6 @@ class HomeRecyclerViewAdapter(
 ) :
     RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder>() {
 
-
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view

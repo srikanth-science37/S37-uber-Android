@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="20dp"
-            android:src="@drawable/ic_home" />
+            android:src="@drawable/ic_home_selected" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
@@ -71,11 +71,40 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/tvSubtitle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        tools:listitem="@layout/home_tasks_list_item" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSubtitle2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="clip_vertical"
+        android:text="Next Upcoming Schedule"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textColor="@color/battleship_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tasksRecyclerView"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/futureTasksRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:paddingBottom="65dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle2"
         tools:listitem="@layout/home_tasks_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

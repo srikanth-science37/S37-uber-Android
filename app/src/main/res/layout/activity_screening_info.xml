@@ -24,7 +24,8 @@
             android:layout_gravity="center"
             android:text="Baseline Visit"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -95,22 +96,46 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
             android:layout_marginTop="12dp"
+            android:drawableStart="@drawable/avatar_basic_drawable"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/dark_grey_blue"
+            android:gravity="center_vertical"
             android:text="You"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/dark_grey_blue"
             android:textStyle="bold" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
-            android:layout_marginTop="12dp"
-            android:text="Jessica Marlin"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/dark_grey_blue"
-            android:textStyle="bold" />
+            android:layout_marginTop="12dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/avatar_basic_drawable"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/dull_teal"
+                android:gravity="center_vertical"
+                android:text="Jessica Marlin"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/dark_grey_blue"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center_vertical"
+                android:text="Nurse"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/silver"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -149,6 +174,7 @@
         android:backgroundTint="@color/dark_grey_blue"
         android:text="En Route"
         android:textAllCaps="false"
+        android:visibility="gone"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

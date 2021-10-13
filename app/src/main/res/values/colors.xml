@@ -13,8 +13,10 @@
     <color name="eta_label_white">#ffffff</color>
     <color name="eta_label_black">#424244</color>
     <color name="blue">#377ab5</color>
+    <color name="night_blue">#061737</color>
     <color name="battleship_grey">#637381</color>
     <color name="dark_grey">#222526</color>
     <color name="green">#72c600</color>
     <color name="silver">#bcc2c5</color>
+    <color name="dull_teal">#54a496</color>
 </resources>

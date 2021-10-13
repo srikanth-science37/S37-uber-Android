@@ -3,21 +3,33 @@ package com.mp.poc.s37uberandroid.ui.maps
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.AppCompatButton
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mp.poc.s37uberandroid.R
+import com.mp.poc.s37uberandroid.S37UberApp
 import com.mp.poc.s37uberandroid.network.NetworkService
+import com.mp.poc.s37uberandroid.ui.notifications.S37NotificationManager
 import com.mp.poc.s37uberandroid.utils.AnimationUtils
 import com.mp.poc.s37uberandroid.utils.MapUtils
 import com.mp.poc.s37uberandroid.utils.ViewUtils
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
 
@@ -33,6 +45,8 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     private var currentLatLngFromServer: LatLng? = null
     private var movingCabMarker: Marker? = null
     private var pathEstimateTime = 0    // Seconds unit
+    private var isInfoCollapsed = false
+    private var isBottomSheetCollapsed = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +59,9 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     }
 
     private fun setDefaultLatLng() {
-        /*// Test markers only (short trip)
-        sourceLatLng = LatLng(37.345470000000006, -121.95588000000001)
-        destinationLatLng = LatLng(37.3579, -121.95437000000001)*/
+        // Test markers only (short trip)
+//        sourceLatLng = LatLng(37.345470000000006, -121.95588000000001)
+//        destinationLatLng = LatLng(37.3579, -121.95437000000001)
 
         sourceLatLng = LatLng(34.019394, -118.4912687)
         destinationLatLng = LatLng(34.1693986, -118.8358302)
@@ -77,7 +91,7 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             builder.include(latLng)
         }
         val bounds = builder.build()
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bounds.center, 16.3f))
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(bounds.center, 13.8f))
     }
 
     private fun addCarMarkerAndGet(latLng: LatLng): Marker? {
@@ -131,12 +145,65 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
 
+        initBottomSheet()
+        initClickListeners()
         setDefaultLatLng()
         drawDefaultPath()
     }
 
+    private fun initBottomSheet() {
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        isBottomSheetCollapsed = true
+                        sheetBehaviorButton.setBackgroundDrawable(
+                            AppCompatResources.getDrawable(
+                                this@MapsActivity,
+                                R.drawable.ic_sheet_arrow_up
+                            )
+                        )
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        isBottomSheetCollapsed = false
+                        sheetBehaviorButton.setBackgroundDrawable(
+                            AppCompatResources.getDrawable(
+                                this@MapsActivity,
+                                R.drawable.ic_sheet_arrow_down
+                            )
+                        )
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+        })
+
+        sheetBehaviorButton.setOnClickListener {
+            setUpdateSheetBehavior(bottomSheetBehavior, it, isBottomSheetCollapsed)
+        }
+    }
+
+    private fun initClickListeners() {
+        tvAppointment.setOnClickListener {
+            if (isInfoCollapsed) {
+                appointmentInfoContainer?.visibility = View.GONE
+                ViewUtils.rotateView(-180f, -0f, ivArrow)
+                isInfoCollapsed = false
+            } else {
+                appointmentInfoContainer?.visibility = View.VISIBLE
+                ViewUtils.rotateView(0f, -180f, ivArrow)
+                isInfoCollapsed = true
+            }
+        }
+    }
+
     override fun showPath(latLngList: List<LatLng>) {
-        Log.e(MapsActivity::class.java.simpleName, "shoPath() called!")
+        Log.e(MapsActivity::class.java.simpleName, "showPath() called!")
         val builder = LatLngBounds.Builder()
         for (latLng in latLngList) {
             builder.include(latLng)
@@ -180,7 +247,7 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             movingCabMarker?.position = currentLatLngFromServer!!
             movingCabMarker?.setAnchor(0.5f, 0.5f)
         } else {
-            pathEstimateTime = (blackPolyline?.points?.size!! * 3) - 5
+            pathEstimateTime = (blackPolyline?.points?.size!! * 3) - 3
             if (pathEstimateTime == 0) {
                 googleMap.setOnMarkerClickListener {
                     it.hideInfoWindow()
@@ -189,7 +256,10 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             }
             previousLatLngFromServer = currentLatLngFromServer
             currentLatLngFromServer = latLng
-            val valueAnimator = AnimationUtils.cabAnimator()
+            val pathLatLngList = blackPolyline?.points
+            val animTimeBound = /*if (pathLatLngList?.size!! > 25)*/ 500L/* else 2400.toLong()*/
+            val valueAnimator = AnimationUtils.cabAnimator(animTimeBound)
+//            Simulator.rescheduleExistingTripTime(animTimeBound)
             valueAnimator.addUpdateListener { va ->
                 if (currentLatLngFromServer != null && previousLatLngFromServer != null) {
                     val multiplier = va.animatedFraction
@@ -207,7 +277,6 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             }
             valueAnimator.start()
 
-            val pathLatLngList = blackPolyline?.points
             val indexOfNextLocation = pathLatLngList?.indexOf(previousLatLngFromServer)
             for (index in 0..indexOfNextLocation!!) {
                 if (index != indexOfNextLocation)
@@ -215,7 +284,7 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             }
             blackPolyline?.points = pathLatLngList
 
-            if (pathLatLngList.size > 15) {
+            if (pathLatLngList.size > 25) {
                 animateCameraWithinBounds(pathLatLngList)
             } else {
                 animateCameraZoomWithinBounds(pathLatLngList)
@@ -229,7 +298,21 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             val bottomSheetEtaText =
                 "Arriving in $time ${if (pathETInMinutes <= 1) "min" else "mins"}"
             tvEta.text = bottomSheetEtaText
+            if (pathETInMinutes <= 5) {
+                (applicationContext as S37UberApp).setupNotificationType(S37NotificationManager.NotificationState.ARRIVING_SHORTLY)
+                fiveMinsChanges()
+            }
         }
+    }
+
+    private fun fiveMinsChanges() {
+        if (enRouteUpdatesPulseImage.isVisible) return
+        enRoutePulseImage.visibility = View.GONE
+        enRouteCircleImage.visibility = View.VISIBLE
+        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
+        setImage(enRouteLineImage, R.drawable.arriving_shortly_line)
+        enRouteUpdatesCircleImage.visibility = View.GONE
+        enRouteUpdatesPulseImage.visibility = View.VISIBLE
     }
 
     override fun informCabIsArriving() {
@@ -246,22 +329,34 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     override fun informTripStart() {
         tvEta.text = ""
         previousLatLngFromServer = null
-        dummyImageView.setImageDrawable(
-            AppCompatResources.getDrawable(
-                this,
-                R.drawable.slice_bottom_sheet_1
-            )
-        )
+        scheduleText.alpha = 0.3f
+        schedulePulseImage.visibility = View.GONE
+        scheduleCircleImage.visibility = View.VISIBLE
+        enRouteCircleImage.visibility = View.GONE
+        enRoutePulseImage.visibility = View.VISIBLE
+        setImage(scheduleLineImage, R.drawable.ic_green_line)
+        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
+        (applicationContext as S37UberApp).setupNotification()
     }
 
     override fun informTripEnd() {
-        dummyImageView.setImageDrawable(
-            AppCompatResources.getDrawable(
-                this,
-                R.drawable.slice_bottom_sheet_2
-            )
-        )
+        enRouteUpdatesPulseImage.visibility = View.VISIBLE
+        enRouteUpdatesCircleImage.visibility = View.GONE
+        setGif(enRouteUpdatesPulseImage, R.drawable.arrived_pulse)
+        (applicationContext as S37UberApp).setupNotificationType(S37NotificationManager.NotificationState.ARRIVED)
+        enRouteText.alpha = 0.3f
+        setImage(enRouteLineImage, R.drawable.ic_green_line)
+        setImage(enRouteUpdatesCircleImage, R.drawable.ic_green_circle)
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(200)
+            launch {
+                enRouteUpdatesPulseImage.visibility = View.GONE
+                enRouteUpdatesCircleImage.visibility = View.VISIBLE
+            }
+        }
+        enRouteUpdatesText.setTextColor(resources.getColor(R.color.green, null))
         val arrivedText = "Arrived"
+        enRouteUpdatesText.text = arrivedText
         tvEta.text = arrivedText
         greyPolyLine?.color = Color.BLACK
         animateCameraWithinBounds(greyPolyLine?.points!!)
@@ -281,6 +376,30 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     override fun showDirectionApiFailedError(error: String) {
         Toast.makeText(this, error, Toast.LENGTH_LONG).show()
         reset()
+    }
+
+    private fun setUpdateSheetBehavior(
+        bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>,
+        button: View,
+        isSheetCollapsed: Boolean
+    ) {
+        bottomSheetBehavior.state =
+            if (isSheetCollapsed) BottomSheetBehavior.STATE_EXPANDED else BottomSheetBehavior.STATE_COLLAPSED
+        isBottomSheetCollapsed = !isSheetCollapsed
+        (button as AppCompatButton).setBackgroundDrawable(
+            AppCompatResources.getDrawable(
+                this,
+                if (isSheetCollapsed) R.drawable.ic_sheet_arrow_down else R.drawable.ic_sheet_arrow_up
+            )
+        )
+    }
+
+    private fun setGif(imageView: ImageView, drawableResource: Int) {
+        setImage(imageView, drawableResource)
+    }
+
+    private fun setImage(imageView: ImageView, resource: Int) {
+        imageView.setImageDrawable(AppCompatResources.getDrawable(this, resource))
     }
 
 }

@@ -3,11 +3,21 @@ package com.mp.poc.s37uberandroid.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.mp.poc.s37uberandroid.R
+import com.mp.poc.s37uberandroid.ui.adapter.HomeRecyclerViewAdapter
 import com.mp.poc.s37uberandroid.ui.maps.MapsActivity
+import com.mp.poc.s37uberandroid.utils.Variables
+import com.mp.poc.s37uberandroid.viewmodel.EnRouteViewModel
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_screening_info.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 class ScreeningInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +29,13 @@ class ScreeningInfoActivity : AppCompatActivity() {
         actionBar.setDisplayShowTitleEnabled(false)
         actionBar.setDisplayHomeAsUpEnabled(true)
         initClickListeners()
+
+//        val viewModel = ViewModelProvider(this).get(EnRouteViewModel::class.java)
+//        viewModel.isJourneyStarted().observe(this, {
+//            if (it) {
+//                btEnRoute.visibility = View.VISIBLE
+//            }
+//        })
     }
 
     override fun onOptionsItemSelected(@NonNull item: MenuItem): Boolean {
@@ -31,6 +48,22 @@ class ScreeningInfoActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (Variables.shouldTriggerNotification) {
+            cancelTimerOperation()
+            btEnRoute.visibility = View.VISIBLE
+        } else {
+            timerOperation()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        cancelTimerOperation()
+    }
+
     private fun initClickListeners() {
         btEnRoute.setOnClickListener {
             goToMapScreen()
@@ -39,5 +72,28 @@ class ScreeningInfoActivity : AppCompatActivity() {
 
     private fun goToMapScreen() {
         startActivity(Intent(this, MapsActivity::class.java))
+    }
+
+    private var timer: Timer? = null
+    private var timerTask: TimerTask? = null
+    private fun timerOperation() {
+        timer = Timer()
+        timerTask = object : TimerTask() {
+            override fun run() {
+                if (Variables.shouldTriggerNotification) {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        btEnRoute.visibility = View.VISIBLE
+                    }
+                    cancelTimerOperation()
+                }
+            }
+        }
+        timer?.scheduleAtFixedRate(timerTask!!, 0, 500)
+    }
+
+    private fun cancelTimerOperation() {
+        timer?.cancel()
+        timer = null
+        timerTask = null
     }
 }

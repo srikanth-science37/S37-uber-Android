@@ -15,3 +15,7 @@ object Constants {
     const val ERROR = "error"
 
 }
+
+object Variables {
+    var shouldTriggerNotification = false
+}

@@ -4,6 +4,9 @@ import android.os.Build
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 
 object ViewUtils {
 
@@ -16,6 +19,22 @@ object ViewUtils {
             window.decorView.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
+    }
+
+    fun rotateView(fromDegrees: Float, toDegrees: Float, view: View) {
+        val rotate = RotateAnimation(
+            fromDegrees,
+            toDegrees,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
+        rotate.duration = 300
+        rotate.interpolator = LinearInterpolator()
+        rotate.isFillEnabled = true
+        rotate.fillAfter = true
+        view.startAnimation(rotate)
     }
 
 }
