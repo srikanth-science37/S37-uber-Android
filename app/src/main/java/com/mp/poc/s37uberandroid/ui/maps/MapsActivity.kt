@@ -23,6 +23,7 @@ import com.mp.poc.s37uberandroid.network.NetworkService
 import com.mp.poc.s37uberandroid.ui.notifications.S37NotificationManager
 import com.mp.poc.s37uberandroid.utils.AnimationUtils
 import com.mp.poc.s37uberandroid.utils.MapUtils
+import com.mp.poc.s37uberandroid.utils.Utils
 import com.mp.poc.s37uberandroid.utils.ViewUtils
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
@@ -153,6 +154,8 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
 
     private fun initBottomSheet() {
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+        Log.d(MapsActivity::class.java.simpleName, "Device height: ${Utils.getDeviceHeight(this)}")
+        bottomSheetBehavior.peekHeight = (Utils.getDeviceHeight(this) / 5.1f).toInt()
         bottomSheetBehavior.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -186,6 +189,11 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
         sheetBehaviorButton.setOnClickListener {
             setUpdateSheetBehavior(bottomSheetBehavior, it, isBottomSheetCollapsed)
         }
+
+        val currentDateString = "${Utils.getEpochFromMillis(System.currentTimeMillis())} 1:00 PM"
+
+        etaText.text = currentDateString
+        tvAppointmentTime.text = currentDateString
     }
 
     private fun initClickListeners() {
@@ -257,9 +265,8 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             previousLatLngFromServer = currentLatLngFromServer
             currentLatLngFromServer = latLng
             val pathLatLngList = blackPolyline?.points
-            val animTimeBound = /*if (pathLatLngList?.size!! > 25)*/ 500L/* else 2400.toLong()*/
+            val animTimeBound = 1200L
             val valueAnimator = AnimationUtils.cabAnimator(animTimeBound)
-//            Simulator.rescheduleExistingTripTime(animTimeBound)
             valueAnimator.addUpdateListener { va ->
                 if (currentLatLngFromServer != null && previousLatLngFromServer != null) {
                     val multiplier = va.animatedFraction
@@ -310,7 +317,7 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
         enRoutePulseImage.visibility = View.GONE
         enRouteCircleImage.visibility = View.VISIBLE
         setImage(enRouteCircleImage, R.drawable.ic_green_circle)
-        setImage(enRouteLineImage, R.drawable.arriving_shortly_line)
+        setImage(enRouteLineImage, R.drawable.ic_half_green_line)
         enRouteUpdatesCircleImage.visibility = View.GONE
         enRouteUpdatesPulseImage.visibility = View.VISIBLE
     }

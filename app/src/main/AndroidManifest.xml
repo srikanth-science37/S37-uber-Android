@@ -10,9 +10,9 @@
         android:name=".S37UberApp"
         android:allowBackup="true"
         android:fullBackupOnly="true"
-        android:icon="@mipmap/ic_launcher_s37"
+        android:icon="@mipmap/ic_s37_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_s37"
+        android:roundIcon="@mipmap/ic_s37_app_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 

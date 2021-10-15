@@ -97,7 +97,7 @@ object Simulator {
 
     private fun startTimerForTrip(webSocketListener: WebSocketListener) {
         val delay = 1000L
-        val period = 500L
+        val period = 1200L
         tripPeriod = period
         pathSize = tripPath.size
         tripPathIndex = 0
@@ -110,7 +110,6 @@ object Simulator {
     private fun getTripTimerTask(): TimerTask {
         return object : TimerTask() {
             override fun run() {
-                Log.e("TestSim", tripPathIndex.toString())
                 if (tripPathIndex == 0) {
                     val jsonObjectTripStart = JSONObject()
                     jsonObjectTripStart.put("type", "tripStart")

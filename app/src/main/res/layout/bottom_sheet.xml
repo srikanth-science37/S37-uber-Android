@@ -44,7 +44,6 @@
         android:layout_marginEnd="10dp"
         android:background="@android:color/white"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="164dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -54,10 +53,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/lato_bold"
             android:text="Jessica Marlin"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/dark_grey_blue"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -146,53 +145,53 @@
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/schedulePulseImage"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/enroute_pulse" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/scheduleCircleImage"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/ic_green_circle"
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/scheduleLineImage"
                     android:layout_width="4dp"
-                    android:layout_height="50dp"
+                    android:layout_height="42dp"
                     android:src="@drawable/ic_silver_line" />
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/enRoutePulseImage"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/enroute_pulse"
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/enRouteCircleImage"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/ic_silver_circle" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/enRouteLineImage"
                     android:layout_width="4dp"
-                    android:layout_height="50dp"
+                    android:layout_height="42dp"
                     android:src="@drawable/ic_silver_line" />
 
                 <pl.droidsonroids.gif.GifImageView
                     android:id="@+id/enRouteUpdatesPulseImage"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/enroute_pulse"
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/enRouteUpdatesCircleImage"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/ic_silver_circle" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -204,7 +203,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="45dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="10dp">
 
@@ -212,12 +211,12 @@
                         android:id="@+id/scheduleText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
                         android:gravity="center_vertical"
                         android:text="Scheduled"
                         android:textAllCaps="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/green"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -238,11 +237,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginHorizontal="16dp"
-                    android:background="@color/battleship_grey" />
+                    android:background="@color/silver" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="45dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="10dp">
 
@@ -250,12 +249,12 @@
                         android:id="@+id/enRouteText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
                         android:gravity="center_vertical"
                         android:text="En Route"
                         android:textAllCaps="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/green"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -265,7 +264,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginHorizontal="16dp"
-                    android:background="@color/battleship_grey" />
+                    android:background="@color/silver" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -277,12 +276,12 @@
                         android:id="@+id/enRouteUpdatesText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
                         android:gravity="center_vertical"
                         android:text="Arriving Shortly"
                         android:textAllCaps="true"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/silver"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -290,7 +289,6 @@
                         android:id="@+id/destinationText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="8dp"
                         android:gravity="center_vertical"
                         android:text="Thousand Oaks"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
@@ -327,7 +325,6 @@
                     android:id="@+id/appointmentInfoContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
                     android:orientation="vertical"
                     android:visibility="gone">
 
@@ -337,14 +334,15 @@
                         android:layout_marginStart="16dp"
                         android:drawableStart="@drawable/ic_clock_with_bg"
                         android:drawablePadding="16dp"
+                        android:fontFamily="@font/lato_bold"
                         android:gravity="center"
                         android:text="Appointment Time"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="@color/silver"
-                        android:textStyle="bold" />
+                        android:textColor="@color/silver" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAppointmentTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="70dp"
@@ -361,12 +359,12 @@
                         android:layout_marginTop="20dp"
                         android:drawableStart="@drawable/ic_info_list"
                         android:drawablePadding="16dp"
+                        android:fontFamily="@font/lato_bold"
                         android:gravity="center"
                         android:text="Appointment Reason"
                         android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                        android:textColor="@color/silver"
-                        android:textStyle="bold" />
+                        android:textColor="@color/silver" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"

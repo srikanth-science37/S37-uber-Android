@@ -7,11 +7,13 @@
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="MapsTheme" parent="AppTheme.Base">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
     </style>
 
     <style name="FullScreen" parent="AppTheme.Base">

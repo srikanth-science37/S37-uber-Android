@@ -6,13 +6,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.mp.poc.s37uberandroid.R
-import com.mp.poc.s37uberandroid.ui.adapter.HomeRecyclerViewAdapter
 import com.mp.poc.s37uberandroid.ui.maps.MapsActivity
+import com.mp.poc.s37uberandroid.utils.Utils
 import com.mp.poc.s37uberandroid.utils.Variables
-import com.mp.poc.s37uberandroid.viewmodel.EnRouteViewModel
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_screening_info.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -28,6 +25,8 @@ class ScreeningInfoActivity : AppCompatActivity() {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         actionBar.setDisplayShowTitleEnabled(false)
         actionBar.setDisplayHomeAsUpEnabled(true)
+
+        initViews()
         initClickListeners()
 
 //        val viewModel = ViewModelProvider(this).get(EnRouteViewModel::class.java)
@@ -62,6 +61,12 @@ class ScreeningInfoActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         cancelTimerOperation()
+    }
+
+    private fun initViews() {
+        val currentDateString =
+            Utils.getEpochFromMillis(System.currentTimeMillis()) + "\n\n1:00 PM - 1:45 PM"
+        tvWhen.text = currentDateString
     }
 
     private fun initClickListeners() {

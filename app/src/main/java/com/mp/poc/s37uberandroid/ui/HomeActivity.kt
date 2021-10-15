@@ -10,11 +10,13 @@ import com.mp.poc.s37uberandroid.R
 import com.mp.poc.s37uberandroid.S37UberApp
 import com.mp.poc.s37uberandroid.model.HomeRecyclerViewModel
 import com.mp.poc.s37uberandroid.ui.adapter.HomeRecyclerViewAdapter
+import com.mp.poc.s37uberandroid.utils.Utils
 import com.mp.poc.s37uberandroid.utils.Variables
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.DateFormat
 import java.util.*
 
 class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecyclerItemClickListener {
@@ -53,10 +55,12 @@ class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecycler
     private fun todayTaskList() {
         val data = mutableListOf<HomeRecyclerViewModel>()
 
+        val currentDateString = Utils.getEpochFromMillis(System.currentTimeMillis())
+
         for (i in 1..3) {
             val model =
                 HomeRecyclerViewModel(
-                    "Screening Visit $i", "Oct 01, 2021 - $i:00 PM"
+                    "Screening Visit $i", "$currentDateString - $i:00 PM"
                 )
             data.add(model)
         }
@@ -80,7 +84,9 @@ class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecycler
     private fun futureTaskList() {
         val data = mutableListOf<HomeRecyclerViewModel>()
 
-        val model = HomeRecyclerViewModel("Quality of Life Assessment", "Nov 12, 2021 - 4:00 PM")
+        val nextDateString = Utils.nextEpoch()
+
+        val model = HomeRecyclerViewModel("Quality of Life Assessment", "$nextDateString - 4:00 PM")
         data.add(model)
 
         futureTasksRecyclerView.adapter = HomeRecyclerViewAdapter(data, this)

@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.mp.poc.s37uberandroid.BuildConfig
@@ -46,7 +47,13 @@ class NotificationTemplates {
                         .bigText(description)
                 )
                 .setPriority(Notification.PRIORITY_HIGH)
-                .setSmallIcon(R.mipmap.ic_launcher_s37)
+                .setSmallIcon(R.drawable.ic_s37_app_notification)
+                .setLargeIcon(
+                    BitmapFactory.decodeResource(
+                        context.resources,
+                        R.mipmap.ic_launcher_s37
+                    )
+                )
                 .setContentIntent(activityPendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
