@@ -11,6 +11,10 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -20,6 +24,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mp.poc.s37uberandroid.R
 import com.mp.poc.s37uberandroid.S37UberApp
 import com.mp.poc.s37uberandroid.network.NetworkService
+import com.mp.poc.s37uberandroid.ui.AppointmentInfoFragment
+import com.mp.poc.s37uberandroid.ui.JourneyInfoFragment
 import com.mp.poc.s37uberandroid.ui.notifications.S37NotificationManager
 import com.mp.poc.s37uberandroid.utils.AnimationUtils
 import com.mp.poc.s37uberandroid.utils.MapUtils
@@ -32,7 +38,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
+class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
 
     private lateinit var presenter: MapsPresenter
     private lateinit var googleMap: GoogleMap
@@ -48,6 +54,32 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     private var pathEstimateTime = 0    // Seconds unit
     private var isInfoCollapsed = false
     private var isBottomSheetCollapsed = true
+
+    /**
+     * The pager widget, which handles animation and allows swiping horizontally to access previous
+     * and next wizard steps.
+     */
+    private lateinit var viewPager: ViewPager2
+
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
+        override fun getItemCount(): Int = 2
+
+        override fun createFragment(position: Int): Fragment {
+            return when (position) {
+                0 -> {
+                    JourneyInfoFragment()
+                }
+
+                else -> {
+                    AppointmentInfoFragment()
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +170,17 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
         movingCabMarker = null
     }
 
+    override fun onBackPressed() {
+        if (viewPager.currentItem == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed()
+        } else {
+            // Otherwise, select the previous step.
+            viewPager.currentItem = viewPager.currentItem - 1
+        }
+    }
+
     override fun onDestroy() {
         presenter.onDetach()
         super.onDestroy()
@@ -190,24 +233,31 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
             setUpdateSheetBehavior(bottomSheetBehavior, it, isBottomSheetCollapsed)
         }
 
+        // Instantiate a ViewPager2 and a PagerAdapter.
+        viewPager = appointmentViewPager
+
+        // The pager adapter, which provides the pages to the view pager widget.
+        val pagerAdapter = ScreenSlidePagerAdapter(this)
+        viewPager.adapter = pagerAdapter
+
         val currentDateString = "${Utils.getEpochFromMillis(System.currentTimeMillis())} 1:00 PM"
 
-        etaText.text = currentDateString
-        tvAppointmentTime.text = currentDateString
+//        etaText.text = currentDateString
+//        tvAppointmentTime.text = currentDateString
     }
 
     private fun initClickListeners() {
-        tvAppointment.setOnClickListener {
-            if (isInfoCollapsed) {
-                appointmentInfoContainer?.visibility = View.GONE
-                ViewUtils.rotateView(-180f, -0f, ivArrow)
-                isInfoCollapsed = false
-            } else {
-                appointmentInfoContainer?.visibility = View.VISIBLE
-                ViewUtils.rotateView(0f, -180f, ivArrow)
-                isInfoCollapsed = true
-            }
-        }
+//        tvAppointment.setOnClickListener {
+//            if (isInfoCollapsed) {
+//                appointmentInfoContainer?.visibility = View.GONE
+//                ViewUtils.rotateView(-180f, -0f, ivArrow)
+//                isInfoCollapsed = false
+//            } else {
+//                appointmentInfoContainer?.visibility = View.VISIBLE
+//                ViewUtils.rotateView(0f, -180f, ivArrow)
+//                isInfoCollapsed = true
+//            }
+//        }
     }
 
     override fun showPath(latLngList: List<LatLng>) {
@@ -313,13 +363,13 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     }
 
     private fun fiveMinsChanges() {
-        if (enRouteUpdatesPulseImage.isVisible) return
-        enRoutePulseImage.visibility = View.GONE
-        enRouteCircleImage.visibility = View.VISIBLE
-        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
-        setImage(enRouteLineImage, R.drawable.ic_half_green_line)
-        enRouteUpdatesCircleImage.visibility = View.GONE
-        enRouteUpdatesPulseImage.visibility = View.VISIBLE
+//        if (enRouteUpdatesPulseImage.isVisible) return
+//        enRoutePulseImage.visibility = View.GONE
+//        enRouteCircleImage.visibility = View.VISIBLE
+//        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
+//        setImage(enRouteLineImage, R.drawable.ic_half_green_line)
+//        enRouteUpdatesCircleImage.visibility = View.GONE
+//        enRouteUpdatesPulseImage.visibility = View.VISIBLE
     }
 
     override fun informCabIsArriving() {
@@ -336,35 +386,35 @@ class MapsActivity : AppCompatActivity(), MapsView, OnMapReadyCallback {
     override fun informTripStart() {
         tvEta.text = ""
         previousLatLngFromServer = null
-        scheduleText.alpha = 0.3f
-        schedulePulseImage.visibility = View.GONE
-        scheduleCircleImage.visibility = View.VISIBLE
-        enRouteCircleImage.visibility = View.GONE
-        enRoutePulseImage.visibility = View.VISIBLE
-        setImage(scheduleLineImage, R.drawable.ic_green_line)
-        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
+//        scheduleText.alpha = 0.3f
+//        schedulePulseImage.visibility = View.GONE
+//        scheduleCircleImage.visibility = View.VISIBLE
+//        enRouteCircleImage.visibility = View.GONE
+//        enRoutePulseImage.visibility = View.VISIBLE
+//        setImage(scheduleLineImage, R.drawable.ic_green_line)
+//        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
         (applicationContext as S37UberApp).setupNotification()
     }
 
     override fun informTripEnd() {
-        enRouteUpdatesPulseImage.visibility = View.VISIBLE
-        enRouteUpdatesCircleImage.visibility = View.GONE
-        setGif(enRouteUpdatesPulseImage, R.drawable.arrived_pulse)
-        (applicationContext as S37UberApp).setupNotificationType(S37NotificationManager.NotificationState.ARRIVED)
-        enRouteText.alpha = 0.3f
-        setImage(enRouteLineImage, R.drawable.ic_green_line)
-        setImage(enRouteUpdatesCircleImage, R.drawable.ic_green_circle)
-        GlobalScope.launch(Dispatchers.Main) {
-            delay(200)
-            launch {
-                enRouteUpdatesPulseImage.visibility = View.GONE
-                enRouteUpdatesCircleImage.visibility = View.VISIBLE
-            }
-        }
-        enRouteUpdatesText.setTextColor(resources.getColor(R.color.green, null))
-        val arrivedText = "Arrived"
-        enRouteUpdatesText.text = arrivedText
-        tvEta.text = arrivedText
+//        enRouteUpdatesPulseImage.visibility = View.VISIBLE
+//        enRouteUpdatesCircleImage.visibility = View.GONE
+//        setGif(enRouteUpdatesPulseImage, R.drawable.arrived_pulse)
+//        (applicationContext as S37UberApp).setupNotificationType(S37NotificationManager.NotificationState.ARRIVED)
+//        enRouteText.alpha = 0.3f
+//        setImage(enRouteLineImage, R.drawable.ic_green_line)
+//        setImage(enRouteUpdatesCircleImage, R.drawable.ic_green_circle)
+//        GlobalScope.launch(Dispatchers.Main) {
+//            delay(200)
+//            launch {
+//                enRouteUpdatesPulseImage.visibility = View.GONE
+//                enRouteUpdatesCircleImage.visibility = View.VISIBLE
+//            }
+//        }
+//        enRouteUpdatesText.setTextColor(resources.getColor(R.color.green, null))
+//        val arrivedText = "Arrived"
+//        enRouteUpdatesText.text = arrivedText
+//        tvEta.text = arrivedText
         greyPolyLine?.color = Color.BLACK
         animateCameraWithinBounds(greyPolyLine?.points!!)
         blackPolyline?.remove()
