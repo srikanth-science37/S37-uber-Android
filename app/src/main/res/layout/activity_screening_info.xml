@@ -22,10 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/lato_bold"
             android:text="Baseline Visit"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/white"
-            android:fontFamily="@font/lato_bold" />
+            android:textColor="@color/white" />
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -46,12 +46,12 @@
             android:layout_marginTop="25dp"
             android:drawableStart="@drawable/ic_calendar"
             android:drawablePadding="16dp"
+            android:fontFamily="@font/lato_bold"
             android:gravity="center"
             android:text="When"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver"
-            android:fontFamily="@font/lato_bold" />
+            android:textColor="@color/silver" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvWhen"
@@ -59,7 +59,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="70dp"
             android:layout_marginTop="12dp"
-            android:text="Oct 01, 2021\n\n1:00 PM - 1:45 PM"
+            android:lineSpacingMultiplier="1.2"
+            android:text="Oct 01, 2021\n1:00 PM - 1:45 PM"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@color/dark_grey_blue" />
@@ -71,12 +72,12 @@
             android:layout_marginTop="25dp"
             android:drawableStart="@drawable/ic_video"
             android:drawablePadding="16dp"
+            android:fontFamily="@font/lato_bold"
             android:gravity="center"
             android:text="Via Video Call"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver"
-            android:fontFamily="@font/lato_bold" />
+            android:textColor="@color/silver" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -85,27 +86,12 @@
             android:layout_marginTop="25dp"
             android:drawableStart="@drawable/ic_group_bg"
             android:drawablePadding="16dp"
+            android:fontFamily="@font/lato_bold"
             android:gravity="center"
             android:text="Attendees"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver"
-            android:fontFamily="@font/lato_bold" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="12dp"
-            android:drawableStart="@drawable/avatar_basic_drawable"
-            android:drawablePadding="10dp"
-            android:drawableTint="@color/dark_grey_blue"
-            android:gravity="center_vertical"
-            android:text="You"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/dark_grey_blue"
-            android:fontFamily="@font/lato_bold" />
+            android:textColor="@color/silver" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
@@ -113,29 +99,71 @@
             android:layout_marginStart="70dp"
             android:layout_marginTop="12dp">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/avatar_basic_drawable"
+                android:backgroundTint="@color/dark_grey_blue"
+                android:clickable="false"
+                android:enabled="false"
+                android:fontFamily="@font/lato_bold"
+                android:text="K"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/white" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/avatar_basic_drawable"
-                android:drawablePadding="10dp"
-                android:drawableTint="@color/dull_teal"
+                android:fontFamily="@font/lato_bold"
                 android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="You"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/dark_grey_blue" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="12dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/avatar_basic_drawable"
+                android:backgroundTint="@color/dull_teal"
+                android:clickable="false"
+                android:enabled="false"
+                android:fontFamily="@font/lato_bold"
+                android:text="JC"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center_vertical"
+                android:padding="10dp"
                 android:text="Jessica Marlin"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/dark_grey_blue"
-                android:fontFamily="@font/lato_bold" />
+                android:textColor="@color/dark_grey_blue" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/lato_bold"
                 android:gravity="center_vertical"
-                android:text="Nurse"
+                android:text="(Nurse)"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/silver"
-                android:fontFamily="@font/lato_bold" />
+                android:textColor="@color/silver" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -145,12 +173,12 @@
             android:layout_marginTop="25dp"
             android:drawableStart="@drawable/ic_info_list"
             android:drawablePadding="16dp"
+            android:fontFamily="@font/lato_bold"
             android:gravity="center"
             android:text="Agenda"
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver"
-            android:fontFamily="@font/lato_bold" />
+            android:textColor="@color/silver" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -175,8 +203,8 @@
         android:backgroundTint="@color/dark_grey_blue"
         android:text="En Route"
         android:textAllCaps="false"
-        android:visibility="gone"
         android:textColor="@android:color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -9,17 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.mp.poc.s37uberandroid.R
 import com.mp.poc.s37uberandroid.S37UberApp
 import com.mp.poc.s37uberandroid.model.HomeRecyclerViewModel
-import com.mp.poc.s37uberandroid.ui.adapter.HomeRecyclerViewAdapter
+import com.mp.poc.s37uberandroid.ui.adapter.TodaySchedulesRVAdapter
+import com.mp.poc.s37uberandroid.ui.adapter.UpcomingSchedulesRVAdapter
 import com.mp.poc.s37uberandroid.utils.Utils
 import com.mp.poc.s37uberandroid.utils.Variables
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 import java.util.*
 
-class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecyclerItemClickListener {
+class HomeActivity : AppCompatActivity(), TodaySchedulesRVAdapter.OnHomeRecyclerItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -30,7 +30,7 @@ class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecycler
 
 //        val viewModel = ViewModelProvider(this).get(EnRouteViewModel::class.java)
 //        viewModel.isJourneyStarted().observe(this, {
-//            (tasksRecyclerView.adapter as HomeRecyclerViewAdapter).getItems()[0].isEnRoute = it
+//            (tasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[0].isEnRoute = it
 //            tasksRecyclerView.adapter?.notifyDataSetChanged()
 //        })
     }
@@ -40,7 +40,7 @@ class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecycler
 
         if (Variables.shouldTriggerNotification) {
             cancelTimerOperation()
-            (tasksRecyclerView.adapter as HomeRecyclerViewAdapter).getItems()[0].isEnRoute = true
+            (tasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[0].isEnRoute = true
             tasksRecyclerView.adapter?.notifyDataSetChanged()
         } else {
             timerOperation()
@@ -78,7 +78,7 @@ class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecycler
         )
         tasksRecyclerView.addItemDecoration(dividerItemDecoration)
 
-        tasksRecyclerView.adapter = HomeRecyclerViewAdapter(data, this)
+        tasksRecyclerView.adapter = TodaySchedulesRVAdapter(data, this)
     }
 
     private fun futureTaskList() {
@@ -86,16 +86,26 @@ class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecycler
 
         val nextDateString = Utils.nextEpoch()
 
-        val model = HomeRecyclerViewModel("Quality of Life Assessment", "$nextDateString - 4:00 PM")
+        val model = HomeRecyclerViewModel(
+            "Quality of Life Assessment",
+            "$nextDateString - 4:00 PM",
+            isUpcoming = true
+        )
         data.add(model)
 
-        futureTasksRecyclerView.adapter = HomeRecyclerViewAdapter(data, this)
+        futureTasksRecyclerView.adapter = UpcomingSchedulesRVAdapter(data)
     }
 
     override fun onItemClick(itemIndex: Int) {
         when (itemIndex) {
-            0 -> goToDetailScreen()
-            //            (futureTasksRecyclerView.adapter as HomeRecyclerViewAdapter).getItems()[itemIndex].isEnRoute -> goToDetailScreen()
+            0 -> {
+                val item =
+                    (tasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[itemIndex]
+                if (item.isEnRoute && !item.isUpcoming) {
+                    goToDetailScreen()
+                }
+            }
+            //            (futureTasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[itemIndex].isEnRoute -> goToDetailScreen()
 //            else -> Toast.makeText(this, "Item ${itemIndex + 1} clicked!", Toast.LENGTH_SHORT)
 //                .show()
         }
@@ -118,7 +128,7 @@ class HomeActivity : AppCompatActivity(), HomeRecyclerViewAdapter.OnHomeRecycler
             override fun run() {
                 if (Variables.shouldTriggerNotification) {
                     GlobalScope.launch(Dispatchers.Main) {
-                        (tasksRecyclerView.adapter as HomeRecyclerViewAdapter).getItems()[0].isEnRoute =
+                        (tasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[0].isEnRoute =
                             true
                         tasksRecyclerView.adapter?.notifyDataSetChanged()
                     }

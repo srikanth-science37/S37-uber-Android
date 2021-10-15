@@ -65,7 +65,7 @@ class ScreeningInfoActivity : AppCompatActivity() {
 
     private fun initViews() {
         val currentDateString =
-            Utils.getEpochFromMillis(System.currentTimeMillis()) + "\n\n1:00 PM - 1:45 PM"
+            Utils.getEpochFromMillis(System.currentTimeMillis()) + "\n1:00 PM - 1:45 PM"
         tvWhen.text = currentDateString
     }
 
