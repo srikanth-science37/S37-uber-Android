@@ -6,7 +6,6 @@ import com.google.maps.GeoApiContext
 import com.mp.poc.s37mapsimulator.Simulator
 import com.mp.poc.s37uberandroid.ui.notifications.S37NotificationManager
 import com.mp.poc.s37uberandroid.utils.Variables
-import com.mp.poc.s37uberandroid.viewmodel.EnRouteViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
