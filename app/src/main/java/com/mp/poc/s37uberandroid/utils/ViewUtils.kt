@@ -1,5 +1,6 @@
 package com.mp.poc.s37uberandroid.utils
 
+import android.content.Context
 import android.os.Build
 import android.view.View
 import android.view.Window
@@ -7,6 +8,8 @@ import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
+import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 
 object ViewUtils {
 
@@ -35,6 +38,14 @@ object ViewUtils {
         rotate.isFillEnabled = true
         rotate.fillAfter = true
         view.startAnimation(rotate)
+    }
+
+    fun setGif(context: Context, imageView: ImageView, drawableResource: Int) {
+        setImage(context, imageView, drawableResource)
+    }
+
+    fun setImage(ctx: Context, imageView: ImageView, resource: Int) {
+        imageView.setImageDrawable(AppCompatResources.getDrawable(ctx, resource))
     }
 
 }

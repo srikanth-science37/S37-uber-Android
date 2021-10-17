@@ -4,13 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -21,8 +19,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.tabs.TabLayoutMediator
 import com.mp.poc.s37uberandroid.R
 import com.mp.poc.s37uberandroid.S37UberApp
+import com.mp.poc.s37uberandroid.model.NurseJourneyInfoModel
 import com.mp.poc.s37uberandroid.network.NetworkService
 import com.mp.poc.s37uberandroid.ui.AppointmentInfoFragment
 import com.mp.poc.s37uberandroid.ui.JourneyInfoFragment
@@ -31,12 +31,9 @@ import com.mp.poc.s37uberandroid.utils.AnimationUtils
 import com.mp.poc.s37uberandroid.utils.MapUtils
 import com.mp.poc.s37uberandroid.utils.Utils
 import com.mp.poc.s37uberandroid.utils.ViewUtils
+import com.mp.poc.s37uberandroid.viewmodel.NurseJourneyInfoViewModel
 import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
 
@@ -52,8 +49,9 @@ class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
     private var currentLatLngFromServer: LatLng? = null
     private var movingCabMarker: Marker? = null
     private var pathEstimateTime = 0    // Seconds unit
-    private var isInfoCollapsed = false
     private var isBottomSheetCollapsed = true
+    private val viewModel: NurseJourneyInfoViewModel by viewModels()
+    private var infoModel: NurseJourneyInfoModel? = null
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -190,7 +188,6 @@ class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
         this.googleMap = googleMap
 
         initBottomSheet()
-        initClickListeners()
         setDefaultLatLng()
         drawDefaultPath()
     }
@@ -239,25 +236,13 @@ class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
         // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = pagerAdapter
+        TabLayoutMediator(viewPagerTabLayout, viewPager)
+        { _, _ -> }.attach()
 
         val currentDateString = "${Utils.getEpochFromMillis(System.currentTimeMillis())} 1:00 PM"
-
-//        etaText.text = currentDateString
-//        tvAppointmentTime.text = currentDateString
-    }
-
-    private fun initClickListeners() {
-//        tvAppointment.setOnClickListener {
-//            if (isInfoCollapsed) {
-//                appointmentInfoContainer?.visibility = View.GONE
-//                ViewUtils.rotateView(-180f, -0f, ivArrow)
-//                isInfoCollapsed = false
-//            } else {
-//                appointmentInfoContainer?.visibility = View.VISIBLE
-//                ViewUtils.rotateView(0f, -180f, ivArrow)
-//                isInfoCollapsed = true
-//            }
-//        }
+        if (infoModel == null) infoModel = NurseJourneyInfoModel
+        infoModel?.timeEpoch = currentDateString
+        viewModel.updateCardUi(infoModel!!)
     }
 
     override fun showPath(latLngList: List<LatLng>) {
@@ -363,13 +348,11 @@ class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
     }
 
     private fun fiveMinsChanges() {
-//        if (enRouteUpdatesPulseImage.isVisible) return
-//        enRoutePulseImage.visibility = View.GONE
-//        enRouteCircleImage.visibility = View.VISIBLE
-//        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
-//        setImage(enRouteLineImage, R.drawable.ic_half_green_line)
-//        enRouteUpdatesCircleImage.visibility = View.GONE
-//        enRouteUpdatesPulseImage.visibility = View.VISIBLE
+        val currentDateString = "${Utils.getEpochFromMillis(System.currentTimeMillis())} 1:00 PM"
+        if (infoModel == null) infoModel = NurseJourneyInfoModel
+        infoModel?.timeEpoch = currentDateString
+        infoModel?.journeyStatus = S37NotificationManager.NotificationState.ARRIVING_SHORTLY
+        viewModel.updateCardUi(infoModel!!)
     }
 
     override fun informCabIsArriving() {
@@ -386,35 +369,23 @@ class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
     override fun informTripStart() {
         tvEta.text = ""
         previousLatLngFromServer = null
-//        scheduleText.alpha = 0.3f
-//        schedulePulseImage.visibility = View.GONE
-//        scheduleCircleImage.visibility = View.VISIBLE
-//        enRouteCircleImage.visibility = View.GONE
-//        enRoutePulseImage.visibility = View.VISIBLE
-//        setImage(scheduleLineImage, R.drawable.ic_green_line)
-//        setImage(enRouteCircleImage, R.drawable.ic_green_circle)
+        val currentDateString = "${Utils.getEpochFromMillis(System.currentTimeMillis())} 1:00 PM"
+        if (infoModel == null) infoModel = NurseJourneyInfoModel
+        infoModel?.timeEpoch = currentDateString
+        infoModel?.journeyStatus = S37NotificationManager.NotificationState.STARTED
+        viewModel.updateCardUi(infoModel!!)
         (applicationContext as S37UberApp).setupNotification()
     }
 
     override fun informTripEnd() {
-//        enRouteUpdatesPulseImage.visibility = View.VISIBLE
-//        enRouteUpdatesCircleImage.visibility = View.GONE
-//        setGif(enRouteUpdatesPulseImage, R.drawable.arrived_pulse)
-//        (applicationContext as S37UberApp).setupNotificationType(S37NotificationManager.NotificationState.ARRIVED)
-//        enRouteText.alpha = 0.3f
-//        setImage(enRouteLineImage, R.drawable.ic_green_line)
-//        setImage(enRouteUpdatesCircleImage, R.drawable.ic_green_circle)
-//        GlobalScope.launch(Dispatchers.Main) {
-//            delay(200)
-//            launch {
-//                enRouteUpdatesPulseImage.visibility = View.GONE
-//                enRouteUpdatesCircleImage.visibility = View.VISIBLE
-//            }
-//        }
-//        enRouteUpdatesText.setTextColor(resources.getColor(R.color.green, null))
-//        val arrivedText = "Arrived"
-//        enRouteUpdatesText.text = arrivedText
-//        tvEta.text = arrivedText
+        val currentDateString = "${Utils.getEpochFromMillis(System.currentTimeMillis())} 1:00 PM"
+        if (infoModel == null) infoModel = NurseJourneyInfoModel
+        infoModel?.timeEpoch = currentDateString
+        infoModel?.journeyStatus = S37NotificationManager.NotificationState.ARRIVED
+        viewModel.updateCardUi(infoModel!!)
+        (applicationContext as S37UberApp).setupNotificationType(S37NotificationManager.NotificationState.ARRIVED)
+        val arrivedText = "Arrived"
+        tvEta.text = arrivedText
         greyPolyLine?.color = Color.BLACK
         animateCameraWithinBounds(greyPolyLine?.points!!)
         blackPolyline?.remove()
@@ -449,14 +420,6 @@ class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
                 if (isSheetCollapsed) R.drawable.ic_sheet_arrow_down else R.drawable.ic_sheet_arrow_up
             )
         )
-    }
-
-    private fun setGif(imageView: ImageView, drawableResource: Int) {
-        setImage(imageView, drawableResource)
-    }
-
-    private fun setImage(imageView: ImageView, resource: Int) {
-        imageView.setImageDrawable(AppCompatResources.getDrawable(this, resource))
     }
 
 }
