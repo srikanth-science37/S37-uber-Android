@@ -230,10 +230,8 @@ class MapsActivity : FragmentActivity(), MapsView, OnMapReadyCallback {
             setUpdateSheetBehavior(bottomSheetBehavior, it, isBottomSheetCollapsed)
         }
 
-        // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = appointmentViewPager
 
-        // The pager adapter, which provides the pages to the view pager widget.
         val pagerAdapter = ScreenSlidePagerAdapter(this)
         viewPager.adapter = pagerAdapter
         TabLayoutMediator(viewPagerTabLayout, viewPager)

@@ -28,170 +28,6 @@
             android:textColor="@color/white" />
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/infoContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:layout_marginBottom="70dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
-            android:drawableStart="@drawable/ic_calendar"
-            android:drawablePadding="16dp"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center"
-            android:text="When"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvWhen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="12dp"
-            android:lineSpacingMultiplier="1.2"
-            android:text="Oct 01, 2021\n1:00 PM - 1:45 PM"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/dark_grey_blue" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
-            android:drawableStart="@drawable/ic_video"
-            android:drawablePadding="16dp"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center"
-            android:text="Via Video Call"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
-            android:drawableStart="@drawable/ic_group_bg"
-            android:drawablePadding="16dp"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center"
-            android:text="Attendees"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="12dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/avatar_basic_drawable"
-                android:backgroundTint="@color/dark_grey_blue"
-                android:clickable="false"
-                android:enabled="false"
-                android:fontFamily="@font/lato_bold"
-                android:text="K"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="You"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/dark_grey_blue" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="12dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/avatar_basic_drawable"
-                android:backgroundTint="@color/dull_teal"
-                android:clickable="false"
-                android:enabled="false"
-                android:fontFamily="@font/lato_bold"
-                android:text="JC"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_bold"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Jessica Marlin"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/dark_grey_blue" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="3dp"
-                android:fontFamily="@font/lato_bold"
-                android:gravity="center_vertical"
-                android:text="(Nurse)"
-                android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                android:textColor="@color/silver" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="25dp"
-            android:drawableStart="@drawable/ic_info_list"
-            android:drawablePadding="16dp"
-            android:fontFamily="@font/lato_bold"
-            android:gravity="center"
-            android:text="Agenda"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/silver" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="5dp"
-            android:text="@string/info_agenda_text"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            android:textColor="@color/dark_grey_blue" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btEnRoute"
         android:layout_width="match_parent"
@@ -208,4 +44,175 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/infoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="70dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:drawableStart="@drawable/ic_calendar"
+                android:drawablePadding="16dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="When"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/silver" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWhen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="12dp"
+                android:lineSpacingMultiplier="1.2"
+                android:text="Oct 01, 2021\n1:00 PM - 1:45 PM"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/dark_grey_blue" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:drawableStart="@drawable/ic_video"
+                android:drawablePadding="16dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Via Video Call"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/silver" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:drawableStart="@drawable/ic_group_bg"
+                android:drawablePadding="16dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Attendees"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/silver" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="12dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/avatar_basic_drawable"
+                    android:backgroundTint="@color/dark_grey_blue"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="K"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="You"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/dark_grey_blue" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="12dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/avatar_basic_drawable"
+                    android:backgroundTint="@color/dull_teal"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="JC"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="Jessica Marlin"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/dark_grey_blue" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="3dp"
+                    android:fontFamily="@font/lato_bold"
+                    android:gravity="center_vertical"
+                    android:text="(Nurse)"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="@color/silver" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="25dp"
+                android:drawableStart="@drawable/ic_info_list"
+                android:drawablePadding="16dp"
+                android:fontFamily="@font/lato_bold"
+                android:gravity="center"
+                android:text="Agenda"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/silver" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/info_agenda_text"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/dark_grey_blue" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
