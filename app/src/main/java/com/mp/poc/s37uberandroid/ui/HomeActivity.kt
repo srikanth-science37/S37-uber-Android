@@ -27,12 +27,6 @@ class HomeActivity : AppCompatActivity(), TodaySchedulesRVAdapter.OnHomeRecycler
         (applicationContext as S37UberApp).triggerFiveSecTimer()
         todayTaskList()
         futureTaskList()
-
-//        val viewModel = ViewModelProvider(this).get(EnRouteViewModel::class.java)
-//        viewModel.isJourneyStarted().observe(this, {
-//            (tasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[0].isEnRoute = it
-//            tasksRecyclerView.adapter?.notifyDataSetChanged()
-//        })
     }
 
     override fun onResume() {
@@ -88,8 +82,7 @@ class HomeActivity : AppCompatActivity(), TodaySchedulesRVAdapter.OnHomeRecycler
 
         val model = HomeRecyclerViewModel(
             "Quality of Life Assessment",
-            "$nextDateString - 4:00 PM",
-            isUpcoming = true
+            "$nextDateString - 4:00 PM"
         )
         data.add(model)
 
@@ -99,15 +92,8 @@ class HomeActivity : AppCompatActivity(), TodaySchedulesRVAdapter.OnHomeRecycler
     override fun onItemClick(itemIndex: Int) {
         when (itemIndex) {
             0 -> {
-                val item =
-                    (tasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[itemIndex]
-                if (item.isEnRoute && !item.isUpcoming) {
-                    goToDetailScreen()
-                }
+                goToDetailScreen()
             }
-            //            (futureTasksRecyclerView.adapter as TodaySchedulesRVAdapter).getItems()[itemIndex].isEnRoute -> goToDetailScreen()
-//            else -> Toast.makeText(this, "Item ${itemIndex + 1} clicked!", Toast.LENGTH_SHORT)
-//                .show()
         }
     }
 

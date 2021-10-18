@@ -28,13 +28,6 @@ class ScreeningInfoActivity : AppCompatActivity() {
 
         initViews()
         initClickListeners()
-
-//        val viewModel = ViewModelProvider(this).get(EnRouteViewModel::class.java)
-//        viewModel.isJourneyStarted().observe(this, {
-//            if (it) {
-//                btEnRoute.visibility = View.VISIBLE
-//            }
-//        })
     }
 
     override fun onOptionsItemSelected(@NonNull item: MenuItem): Boolean {
