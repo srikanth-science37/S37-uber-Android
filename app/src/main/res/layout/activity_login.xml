@@ -16,18 +16,32 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNoAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:paddingVertical="5dp"
+        android:text="@string/no_account_text"
+        android:textColor="@color/dark_grey_blue"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/logoS37"
+        app:layout_constraintEnd_toStartOf="@id/tvRegisterNow"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvRegisterNow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
         android:clickable="true"
         android:focusable="true"
-        android:text="Don’t have an account ? Register Now"
+        android:padding="5dp"
+        android:text="@string/register_text"
         android:textColor="@color/blue"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/logoS37"
+        app:layout_constraintBottom_toBottomOf="@id/tvNoAccount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/tvNoAccount" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
@@ -56,30 +70,46 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEmailLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="24dp"
-        android:fontFamily="@font/lato_bold"
-        android:text="Email"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:textColor="@color/dark_grey_blue"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etEmail"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="28dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEmailLabel" />
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvErrorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/error_message_bg"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="12dp"
+            android:text="@string/error_message_wrong_cred"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/tomato"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmailLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="Email"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/dark_grey_blue" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvPassword"
@@ -93,7 +123,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@color/dark_grey_blue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etPassword"
@@ -105,7 +135,6 @@
         android:drawableEnd="@drawable/ic_universal_view"
         android:fontFamily="@font/lato_regular"
         android:inputType="textPassword"
-        android:textAppearance="@font/lato_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvPassword" />
@@ -116,7 +145,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:background="@android:color/transparent"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@id/etPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="@id/etPassword"

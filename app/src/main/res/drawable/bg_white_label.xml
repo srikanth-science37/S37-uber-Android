@@ -4,8 +4,8 @@
     android:tint="@color/eta_label_black"
     android:tintMode="add">
     <corners
-        android:bottomRightRadius="7dp"
-        android:topRightRadius="7dp" />
+        android:bottomRightRadius="4dp"
+        android:topRightRadius="4dp" />
     <solid android:color="@color/eta_label_white" />
     <padding
         android:bottom="1px"

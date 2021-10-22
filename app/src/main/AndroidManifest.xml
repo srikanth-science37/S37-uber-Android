@@ -36,6 +36,10 @@
             android:theme="@style/AppTheme" />
 
         <activity
+            android:name=".ui.RegistrationActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme" />
 

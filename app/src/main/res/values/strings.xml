@@ -19,4 +19,20 @@
     <string name="take_next_ride">Take Next Ride</string>
     <string name="route_not_available_choose_different_locations">Route Not Available: Choose different pickup and drop location</string>
     <string name="info_agenda_text">Baseline visit ABD 1234567890\n\n03:00-3:45pm: Coordinator to collect medical history &amp; medications history\n\nInvestigator to confirm medical history with participant\n\nCoordinator to collect remainder of platform assessments and Urine Pregnancy Test</string>
+    <string name="error_message_wrong_cred">Your email and/or password are invalid.</string>
+    <string name="error_message_wrong_cred_warning">Your email and/or password are invalid. You have [#] more attempts before your account will be locked.</string>
+    <string name="no_account_text">Don’t have an account ?</string>
+    <string name="register_text">Register Now</string>
+    <string name="already_acc_text">I\'m already a member</string>
+    <string name="sign_in_text">Sign In</string>
+    <string-array name="signup_fields_array">
+        <item>First Name</item>
+        <item>Last Name</item>
+        <item>Email ID</item>
+        <item>Phone Number</item>
+        <item>Password</item>
+        <item>Confirm Password</item>
+        <item>City</item>
+        <item>State</item>
+    </string-array>
 </resources>

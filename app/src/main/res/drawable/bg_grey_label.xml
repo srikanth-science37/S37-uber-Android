@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <corners
-        android:bottomLeftRadius="7dp"
-        android:topLeftRadius="7dp" />
+        android:bottomLeftRadius="4dp"
+        android:topLeftRadius="4dp" />
     <solid android:color="@color/eta_label_black" />
 </shape>

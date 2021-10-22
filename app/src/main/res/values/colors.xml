@@ -23,4 +23,6 @@
     <color name="silver">#bcc2c5</color>
     <color name="pinkish_grey">#FFc4c4c4</color>
     <color name="pinkish_grey_30">#4Dc4c4c4</color>
+    <color name="tomato">#e74c3c</color>
+    <color name="light_tan">#fadbd8</color>
 </resources>
