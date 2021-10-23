@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import com.mp.poc.s37uberandroid.R
+import com.mp.poc.s37uberandroid.utils.Preference
+import com.mp.poc.s37uberandroid.utils.Utils.toEditable
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -15,6 +17,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         initClickListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (Preference.isSignUp(this)) {
+            val userEmailId = Preference.getEmailId(this)
+            userEmailId?.apply {
+                etEmail.text = this.toEditable()
+            }
+        }
     }
 
     private fun initClickListeners() {

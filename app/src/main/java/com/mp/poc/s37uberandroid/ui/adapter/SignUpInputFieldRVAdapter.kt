@@ -1,5 +1,7 @@
 package com.mp.poc.s37uberandroid.ui.adapter
 
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.mp.poc.s37uberandroid.R
 import com.mp.poc.s37uberandroid.model.SignUpInputFieldModel
+
 
 class SignUpInputFieldRVAdapter(
     private val mList: List<SignUpInputFieldModel>,
@@ -68,12 +71,17 @@ class SignUpInputFieldRVAdapter(
             holder.editTextField.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0)
             if (position == 7) {
                 holder.editTextField.imeOptions = EditorInfo.IME_ACTION_DONE
+                holder.editTextField.setSingleLine()
             } else {
                 holder.editTextField.imeOptions = EditorInfo.IME_ACTION_NEXT
+                holder.editTextField.setSingleLine()
             }
             if (position == 3) {
                 holder.editTextField.inputType = InputType.TYPE_CLASS_PHONE
-                holder.editTextField.setEms(10)
+                val maxLength = 10
+                val fArray = arrayOfNulls<InputFilter>(1)
+                fArray[0] = LengthFilter(maxLength)
+                holder.editTextField.filters = fArray
             }
         }
     }

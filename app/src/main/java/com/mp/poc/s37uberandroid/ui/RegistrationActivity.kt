@@ -1,18 +1,19 @@
 package com.mp.poc.s37uberandroid.ui
 
 import android.os.Bundle
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mp.poc.s37uberandroid.R
 import com.mp.poc.s37uberandroid.model.SignUpInputFieldModel
 import com.mp.poc.s37uberandroid.ui.adapter.SignUpInputFieldRVAdapter
+import com.mp.poc.s37uberandroid.utils.Preference
+import com.mp.poc.s37uberandroid.utils.Utils
 import kotlinx.android.synthetic.main.activity_registration.*
 
-class RegistrationActivity : AppCompatActivity(),
-    SignUpInputFieldRVAdapter.OnSignUpScreenUpdateListener {
+class RegistrationActivity : FragmentActivity(),
+    SignUpInputFieldRVAdapter.OnSignUpScreenUpdateListener, S37DialogFragment.S37DialogListener {
 
     private lateinit var filledData: Array<String>
 
@@ -30,7 +31,7 @@ class RegistrationActivity : AppCompatActivity(),
         }
 
         btSignUp.setOnClickListener {
-            Toast.makeText(this, "All filled", Toast.LENGTH_SHORT).show()
+            validateFields()
         }
     }
 
@@ -79,6 +80,30 @@ class RegistrationActivity : AppCompatActivity(),
     }
 
     private fun validateFields() {
+        if (!Utils.isValidEmail(filledData[2])) {
+            S37DialogFragment(resources.getString(R.string.email_error_message)).show(
+                supportFragmentManager,
+                "DialogFragment"
+            )
+        } else if (!Utils.isValidPassword(filledData[4])) {
+            S37DialogFragment(resources.getString(R.string.password_error_message)).show(
+                supportFragmentManager,
+                "DialogFragment"
+            )
+        } else if (filledData[4] != filledData[5]) {
+            S37DialogFragment(resources.getString(R.string.password_unmatched_error_message)).show(
+                supportFragmentManager,
+                "DialogFragment"
+            )
+        } else {
+            S37DialogFragment().show(supportFragmentManager, "DialogFragment")
+        }
+    }
 
+    override fun onSignUpSuccess() {
+        Preference.putIsSignUp(this, true)
+        Preference.putEmailId(this, filledData[2])
+        Preference.putPassword(this, filledData[4])
+        goBackToSignIn()
     }
 }

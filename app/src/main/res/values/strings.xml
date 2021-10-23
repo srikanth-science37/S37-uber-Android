@@ -35,4 +35,10 @@
         <item>City</item>
         <item>State</item>
     </string-array>
+    <string name="success_text">Successful</string>
+    <string name="success_message">User has been successfully created</string>
+    <string name="dismiss_text">Dismiss</string>
+    <string name="email_error_message">Please enter valid email ID</string>
+    <string name="password_error_message">Please enter valid password</string>
+    <string name="password_unmatched_error_message">Confirm password does not match</string>
 </resources>
