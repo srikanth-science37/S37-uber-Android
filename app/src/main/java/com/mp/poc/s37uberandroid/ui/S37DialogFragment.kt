@@ -27,6 +27,7 @@ class S37DialogFragment(var errorMessage: String = "") : DialogFragment() {
         super.onAttach(context)
 
         try {
+            if (requireActivity() is LoginActivity) return
             listener = requireActivity() as S37DialogListener
         } catch (e: ClassCastException) {
             throw ClassCastException(

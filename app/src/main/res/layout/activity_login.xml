@@ -108,7 +108,8 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="8dp"
+            android:imeOptions="actionNext" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -134,6 +135,7 @@
         android:layout_marginEnd="24dp"
         android:drawableEnd="@drawable/ic_universal_view"
         android:fontFamily="@font/lato_regular"
+        android:imeOptions="actionDone"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +161,10 @@
         android:layout_marginEnd="24dp"
         android:background="@drawable/bottom_sheet_basic_button"
         android:backgroundTint="@color/dark_grey_blue"
+        android:fontFamily="@font/lato_bold"
         android:text="Login"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

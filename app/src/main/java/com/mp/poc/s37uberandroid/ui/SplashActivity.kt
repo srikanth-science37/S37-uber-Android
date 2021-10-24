@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mp.poc.s37uberandroid.R
+import com.mp.poc.s37uberandroid.utils.Preference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -15,12 +16,14 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
         GlobalScope.launch(Dispatchers.Main) {
             delay(1500)
-            goToLogin()
+            screenTransition()
         }
     }
 
-    private fun goToLogin() {
-        startActivity(Intent(this, LoginActivity::class.java))
+    private fun screenTransition() {
+        val intentClass = if (Preference.isLogin(this)) HomeActivity::class.java else
+            LoginActivity::class.java
+        startActivity(Intent(this, intentClass))
         finish()
     }
 }

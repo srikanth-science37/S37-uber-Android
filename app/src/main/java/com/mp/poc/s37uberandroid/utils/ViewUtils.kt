@@ -10,6 +10,8 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.AppCompatButton
+import com.mp.poc.s37uberandroid.R
 
 object ViewUtils {
 
@@ -46,6 +48,21 @@ object ViewUtils {
 
     fun setImage(ctx: Context, imageView: ImageView, resource: Int) {
         imageView.setImageDrawable(AppCompatResources.getDrawable(ctx, resource))
+    }
+
+    fun setAlpha(view: View, shouldEnable: Boolean) {
+        view.alpha = if (shouldEnable) 1f else 0.3f
+    }
+
+    fun setButtonAlpha(context: Context, button: AppCompatButton, enable: Boolean) {
+        setAlpha(button, enable)
+        button.setTextColor(
+            context.resources.getColor(
+                if (enable) R.color.white else R.color.black, null
+            )
+        )
+        button.isEnabled = enable
+        button.isClickable = enable
     }
 
 }
